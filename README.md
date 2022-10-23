@@ -5,10 +5,10 @@ The n8n Python Virtual Environment Manager creates virtual environments and run 
 This packages comes with nano to help edit files and configure scripts from within the container, but you can always edit files in the maped directories from your host system. 
 
 - [Installation](#Installation)
-- [Script Setup](#Script Setup)
-- [Example Usage](#Example Usage)
+- [Script Setup](#Script-Setup)
+- [Example Usage](#Example-Usage)
 - [Debugging](#Debugging)
-- [Update Plan](#Update Plan)
+- [Update Plan](#Update-Plan)
 
 # Installation
 
