@@ -5,20 +5,20 @@ The n8n Python Virtual Environment Manager creates virtual environments and run 
 This packages comes with nano to help edit files and configure scripts from within the container, but you can always edit files in the maped directories from your host system. 
 
 ## Table of Contents
-- [Installation](#Installation)
+- [Installation](#installation)
   - [Build from Source](#build-from-dockerfile)
   - [Start Docker Container](#start-docker-container)
 - [Script Setup](#script-setup)
   - [Directory Setup](#directory-setup)
-  - [Manager Config](#manager_config.json)
-  - [Script Config](#script_config.json)
-- [Example Usage](#Example-Usage)
-  - [Configure Script Directory](#Configure-Script-Directory)
-  - [Create Virtual Environment for Script](#Create-Virtual-Environment-for-Script)
-  - [Delete Virtual Environment](#Delete-Virtual-Environment)
-  - [Run Script](#Run-Script)
-- [Debugging](#Debugging)
-- [Update Plan](#Update-Plan)
+  - [Manager Config](#manager-configuration)
+  - [Script Config](#script-configuration)
+- [Example Usage](#example-usage)
+  - [Configure Script Directory](#configure-script-directory)
+  - [Create Virtual Environment for Script](#create-virtual-environment-for-script)
+  - [Delete Virtual Environment](#delete-virtual-environment)
+  - [Run Script](#run-script)
+- [Debugging](#debugging)
+- [Update Plan](#update-plan)
 
 # Installation
 Use the n8n-pyvenv-manager docker image . The configuration is as of now command-line based. This assumes you have some fundamental knowledge of unix operating systems and docker exec.
@@ -61,9 +61,9 @@ NOTE: this is a modified version of the official docker-compose file with MariaD
 ```
 NOTE: the script directory name and the script name MUST be the same in order for the manager to create virtual environments and execute scripts successfully. 
 
-## manager_config.json
+## Manager Configuration
 
-The json file configures the manager. As of now, it only configures the home path for the manager. The default is "/data/pyvenv_scripts". In this directory the scripts should be structured as specified above. This should be the exact same thing as the <root_path> mentioned above
+The manager_config.json file configures the manager. As of now, it only configures the home path for the manager. The default is "/data/pyvenv_scripts". In this directory the scripts should be structured as specified above. This should be the exact same thing as the <root_path> mentioned above
 CAUTION: make sure the "/" at the end of the path string is present! Otherwise, the script will not work. 
 ```
 {
@@ -76,8 +76,8 @@ CAUTION: make sure the "/" at the end of the path string is present! Otherwise, 
     "root_path":"/data/pyvenv_scripts"      # Script will FAIL
 }
 ```
-## script_config.json
-These JSON files in each script directory configure the script and its dependencies:
+## Script Configuration
+These script_config.json files in each script directory configure the script and its dependencies:
 ```
 {
     "name":<script_name>,
