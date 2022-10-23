@@ -1,6 +1,6 @@
 {
   "name":"welcome_package",
-  "requirements":[
+  "dependencies":[
 
   ]
 }

@@ -1,5 +1,5 @@
 #!/bin/bash
-source /data/scripts/.envs/$1/bin/activate
-cd /data/scripts/$1/
-python3 $1.py
+source $1.envs/$2/bin/activate
+cd $1$2/
+python3 $2.py
 deactivate

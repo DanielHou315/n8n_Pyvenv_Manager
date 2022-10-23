@@ -1,4 +1,4 @@
 #!/bin/bash
-source /data/scripts/.envs/$1/bin/activate
-python3 /data/scripts/manage/resources/get-pip.py
+source $1.envs/$2/bin/activate
+python3 $1manage/resources/get-pip.py
 deactivate
