@@ -4,6 +4,12 @@ The n8n Python Virtual Environment Manager creates virtual environments and run 
 
 This packages comes with nano to help edit files and configure scripts from within the container, but you can always edit files in the maped directories from your host system. 
 
+- [Installation](#Installation)
+- [Script Setup](#Script Setup)
+- [Example Usage](#Example Usage)
+- [Debugging](#Debugging)
+- [Update Plan](#Update Plan)
+
 # Installation
 
 Use the n8n-pyvenv-manager docker image . The configuration is as of now command-line based. This assumes you have some fundamental knowledge of unix operating systems and docker exec.
@@ -18,7 +24,6 @@ To Run with Docker Compose:
 
 1. Create a directory for each of your scripts in the /data/pyvenv_scripts directory like so:
    Each Script must be setup in a specific structure so that the manager can recognize the script and configure the virtual environments accordingly. The home directory of pyvenv_manager should look something like this: 
-
 ```
 <root_path>/                        # root_directory for scripts in persistent n8n storage path
   - <script_1_name>/
