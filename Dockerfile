@@ -23,6 +23,6 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 RUN apt-get update && apt-get install -y git python3-pip python3-setuptools python3-venv
 
 # Install Custom Component: pyvenv-manager
-COPY pyvenv_manager/ /data/
+COPY pyvenv_scripts/ /data/
 
 EXPOSE 5678/tcp
