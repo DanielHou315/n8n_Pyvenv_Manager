@@ -25,14 +25,17 @@ To Run with Docker Compose:
     - <script_1_name>.py            # This is the main script that will be executed by manager
     - script_config.json            # See script_config.json
     - <other_required_files>
+
   - <script_2_name>/
     - <script_1_name>.py            # This is the main script that will be executed by manager
     - script_config.json            # See script_config.json
     - <other_required_files>
+
   - manage/                         # This is where the manager program and is dependencies lives
     - manage.py                     # This is the main manager program
     - manager_config.json           # 
     - resources/                    # This is where the manager helper modules and scripts live
+
   - .envs/                          # This is a directory automatically created by manage.py to host all virtual environments
     - <script_1_name>/              # Venv for script_1
     - <script_2_name>/              # Venv for script_2
@@ -46,7 +49,9 @@ CAUTION: make sure the "/" at the end of the path string is present! Otherwise, 
 {
     "root_path":"/data/pyvenv_scripts/"     # OK
 }
+
 // vs
+
 {
     "root_path":"/data/pyvenv_scripts"      # Script will FAIL
 }
@@ -84,8 +89,8 @@ Let's say I wrote a print_hello script that imports JSON, bs4, dropbox as my dep
   - print_hello/
     - print_hello.py
     - script_config.json
-    - some_other_stuff/ # Whatever other scripts or modules print_hello script relies on
-  - manage/ # This is where the manager program and is dependencies lives
+    - some_other_stuff/
+  - manage/
     - manage.py
     - manager_config.json
     - resources/
@@ -97,41 +102,37 @@ Where the script_config.json looks like
 {
   "name":"print_hello",
   "dependencies":[
-     "BeautifulSoup4", # Script will Fail
-     "bs4" # Script will work
-  ]
+     "bs4",
+     "dropbox"
+  ]                         # Notice json module is part of Python, so no need to specify dependency
 }
 ```
 
 ## Create Virtual Environment for Script
 
-To create a virtual environment for this module, run
+To create a virtual environment for this module, go to the manage directory and run
 ```
-python3
+python3 manage.py create print_hello
 ```
-
 The manager will automatically create a virtual environment for this script, add pip to the venv, and install the dependencies listed in script_config.json. 
 
 ## Delete Virtual Environment
 
-To delete a virtual environment, run
+To delete a virtual environment, go to the manage directory and run
 ```
-python3 /data/pyvenv_scripts/manage.py remove print_hello
+python3 manage.py remove print_hello
 ```
-
 The manager only deletes the virtual environment, and your scripts path will be left intact in the original paths. 
 
 ## Run Script
 Make sure you have created a virtual environment for this script using the method mentioned above. 
-To run a script, run
+To run a script, go to the manage directory and run
 ```
-python3 /data/pyvenv_scripts/manage.py run print_hello
+python3 manage.py run print_hello
 ```
-
 This activates the virtual environment for that script, runs the script, and deactivates virtual environment. 
 
-## Auto Remove unused environments
-Coming Soon
+This run command is intended for the n8n Execute node, where you run this line in the node and the manager takes care of the virtual environments for you. 
 
 # Debugging
 To manually activate a virtual environment and debug script, run
@@ -145,10 +146,6 @@ To deactivate the virtual environment, run
 deactivate
 ```
 NOTE: some shell does not have the "source" or "deactivate" command. All commands in manage.py and in the examples here are run with #!/bin/bash. Check documentaiton for your shell for how to activate python virtual environments. 
-
-# More Documentation:
-### manage.py
-Coming Soon
 
 # Future Plans
 1. Enable adding arguments to the end of scripts. Right now, a workaround is to save the arguments in a json file and let another script read that json file to get the parameters. 
