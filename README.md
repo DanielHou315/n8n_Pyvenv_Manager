@@ -18,10 +18,13 @@ This packages comes with nano to help edit files and configure scripts from with
   - [Delete Virtual Environment](#delete-virtual-environment)
   - [Run Script](#run-script)
 - [Debugging](#debugging)
-- [Update Plan](#update-plan)
+  - [Activate Virtual Environment](#activate-virtual-environment)
+  - [Dectivate Virtual Environment](#dectivate-virtual-environment)
+- [Acknowledgements](#acknowledgements)
+- [Future Plans](#future-plans)
 
 # Installation
-Use the n8n-pyvenv-manager docker image . The configuration is as of now command-line based. This assumes you have some fundamental knowledge of unix operating systems and docker exec.
+Install n8n-pyvenv-manager using the n8n-pyvenv-manager [docker](https://www.docker.com/) image. The configuration is as of now command-line based. This assumes you have some fundamental knowledge of unix commands and docker exec.
 ## Build from Dockerfile
 To build docker image from Dockerfile, run
 ```
@@ -32,9 +35,12 @@ To start the n8n docker container with Docker Compose, run
 ```
 docker compose up -d
 ```
+You may need to use ```sudo``` depending on your docker configuration. 
 NOTE: this is a modified version of the official docker-compose file with MariaDB 10.9. To run with other databases, see [official documentation](https://github.com/n8n-io/n8n)
 
 # Script Setup
+To setup directory structures for your scripts, you may need to access the container console. A docker dashboard, such as [Portainer](https://www.portainer.io/), is recommended. 
+
 ## Directory Setup
 1. Create a directory for each of your scripts in the /data/pyvenv_scripts directory like so:
    Each Script must be setup in a specific structure so that the manager can recognize the script and configure the virtual environments accordingly. The home directory of pyvenv_manager should look something like this: 
@@ -67,11 +73,11 @@ The manager_config.json file configures the manager. As of now, it only configur
 CAUTION: make sure the "/" at the end of the path string is present! Otherwise, the script will not work. 
 ```
 {
-    "root_path":"/data/pyvenv_scripts/"     # OK
+    "root_path":"/data/pyvenv_scripts/"     # Script will run
 }
-
-// vs
-
+```
+VS.
+```
 {
     "root_path":"/data/pyvenv_scripts"      # Script will FAIL
 }
@@ -149,6 +155,7 @@ python3 manage.py remove print_hello
 The manager only deletes the virtual environment, and your scripts path will be left intact in the original paths. 
 
 ## Run Script
+
 Make sure you have created a virtual environment for this script using the method mentioned above. 
 To run a script, go to the manage directory and run
 ```
@@ -159,12 +166,14 @@ This activates the virtual environment for that script, runs the script, and dea
 This run command is intended for the n8n Execute node, where you run this line in the node and the manager takes care of the virtual environments for you. 
 
 # Debugging
+## Activate Virtual Environment
 To manually activate a virtual environment and debug script, run
 ```
 source /<root_directory>/.env/<script_name>/bin/activate
 ```
 Now you can debug your script in the virtual environment.  
 
+## Dectivate Virtual Environment
 To deactivate the virtual environment, run
 ```
 deactivate
