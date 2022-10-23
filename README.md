@@ -6,10 +6,10 @@ This packages comes with nano to help edit files and configure scripts from with
 
 ## Table of Contents
 - [Installation](#Installation)
-  - [Build from Source](##Build-from-Dockerfile)
-  - [Start Docker Container](##Start-Docker-Container)
-- [Script Setup](#Script-Setup)
-  - [Directory Setup](##Directory-Setup)
+  - [Build from Source](##build-from-dockerfile)
+  - [Start Docker Container](##start-docker-container)
+- [Script Setup](#script-setup)
+  - [Directory Setup](##directory-setup)
   - [Manager Config](##manager_config.json)
   - [Script Config](##script_config.json)
 - [Example Usage](#Example-Usage)
