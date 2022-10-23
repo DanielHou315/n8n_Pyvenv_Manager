@@ -6,7 +6,8 @@ This packages comes with nano to help edit files and configure scripts from with
 
 ## Table of Contents
 - [Installation](#Installation)
-  - [Build from Source]
+  - [Build from Source](##Build-from-Dockerfile)
+  - [Start Docker Container](##Start-Docker-Container)
 - [Script Setup](#Script-Setup)
   - [Directory Setup](##Directory-Setup)
   - [Manager Config](##manager_config.json)
@@ -16,7 +17,6 @@ This packages comes with nano to help edit files and configure scripts from with
   - [Create Virtual Environment for Script](##Create-Virtual-Environment-for-Script)
   - [Delete Virtual Environment](##Delete-Virtual-Environment)
   - [Run Script](##Run-Script)
-
 - [Debugging](#Debugging)
 - [Update Plan](#Update-Plan)
 
@@ -27,11 +27,12 @@ To build docker image from Dockerfile, run
 ```
 docker build . -t n8n-pyvenv-manager
 ```
+## Start Docker Container
 To start the n8n docker container with Docker Compose, run
 ```
 docker compose up -d
 ```
-NOTE: this is a modified version of the official docker-compose file with MariaDB. To run with other databases, see [official documentation](https://github.com/n8n-io/n8n)
+NOTE: this is a modified version of the official docker-compose file with MariaDB 10.9. To run with other databases, see [official documentation](https://github.com/n8n-io/n8n)
 
 # Script Setup
 ## Directory Setup
