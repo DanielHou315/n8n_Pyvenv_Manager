@@ -15,7 +15,7 @@ This packages comes with nano to help edit files and configure scripts from with
   - [Create Virtual Environment for Script](##Create-Virtual-Environment-for-Script)
   - [Delete Virtual Environment](##Delete-Virtual-Environment)
   - [Run Script](##Run-Script)
-  
+
 - [Debugging](#Debugging)
 - [Update Plan](#Update-Plan)
 
@@ -39,7 +39,7 @@ To Run with Docker Compose:
     - <other_required_files>
 
   - <script_2_name>/
-    - <script_1_name>.py            # This is the main script that will be executed by manager
+    - <script_2_name>.py            # This is the main script that will be executed by manager
     - script_config.json            # See script_config.json
     - <other_required_files>
 
@@ -52,6 +52,7 @@ To Run with Docker Compose:
     - <script_1_name>/              # Venv for script_1
     - <script_2_name>/              # Venv for script_2
 ```
+NOTE: the script directory name and the script name MUST be the same in order for the manager to create virtual environments and execute scripts successfully. 
 
 ## manager_config.json
 
@@ -82,6 +83,9 @@ These JSON files in each script directory configure the script and its dependenc
 }
 ```
 As of now, the name category is not being used. It is, however, good for debugging to configure a proper name in the json file. 
+
+NOTE: Right now, the manager does not have the capabilit to check for duplicated environments. It is your responsibility to make sure no two scripts have the same name. Otherwise, the venv could fail to create or the existing venv could be destroyed. Duplicate check will come in a future update. 
+
 The manager installs python dependencies with pip, so for each dependency, please name it EXACTLY as the name used by pip. This means
 ```
 {
@@ -127,6 +131,7 @@ To create a virtual environment for this module, go to the manage directory and 
 python3 manage.py create print_hello
 ```
 The manager will automatically create a virtual environment for this script, add pip to the venv, and install the dependencies listed in script_config.json. 
+NOTE: Right now, the manager does not have the capabilit to check for duplicated environments. It is your responsibility to make sure no two scripts have the same name. Otherwise, the venv could fail to create or the existing venv could be destroyed. Duplicate check will come in a future update. 
 
 ## Delete Virtual Environment
 
@@ -160,5 +165,6 @@ deactivate
 NOTE: some shell does not have the "source" or "deactivate" command. All commands in manage.py and in the examples here are run with #!/bin/bash. Check documentaiton for your shell for how to activate python virtual environments. 
 
 # Future Plans
-1. Enable adding arguments to the end of scripts. Right now, a workaround is to save the arguments in a json file and let another script read that json file to get the parameters. 
-2. autoremove command to remove unused virtual environments
+1. Enable duplicate checks. Right now, it is up to you to make sure no two scripts have the same directory name. 
+2. Enable adding arguments to the end of scripts. Right now, a workaround is to save the arguments in a json file and let another script read that json file to get the parameters. 
+3. autoremove command to remove unused virtual environments
