@@ -37,8 +37,8 @@ services:
     links:
       - db
     volumes:
-      - ./n8n-stor:/data
-      - ./n8n-usr:/home/node
+      - ./n8n-data:/data
+      - ./n8n-node:/home/node
     depends_on:
       db:
         condition: service_healthy

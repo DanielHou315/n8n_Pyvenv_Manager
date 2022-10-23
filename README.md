@@ -1,14 +1,14 @@
 # n8n Python Virtualenv Manager
 
-The n8n Python Virtual Environment Manager creates virtual environments and run your python scripts in virtual environment with one command. This allows your scripts to run in designated virtual environments in n8n that otherwise do not support persistent python site-package storage or virtual environment. Files saved from your script can also be read and edited by other n8n nodes or other scripts should you choose to do so. 
+The n8n-pyvenv-manager is a derivative of the [n8n automation platform](https://n8n.io/) with added capability to create virtual environments and run your python scripts with one command. This allows your scripts to run in designated virtual environments in n8n that otherwise do not support persistent python site-package storage or virtual environments. Files saved from your script can also be read and edited by other n8n nodes or other scripts should you choose to do so. 
 
 This packages comes with nano to help edit files and configure scripts from within the container, but you can always edit files in the maped directories from your host system. 
 
 ## Table of Contents
 - [Installation](#installation)
-  - [Build from Source](#build-from-dockerfile)
   - [Start Docker Container](#start-docker-container)
-- [Script Setup](#script-setup)
+  - [Build from Source](#build-from-dockerfile)
+- [Setup](#setup)
   - [Directory Setup](#directory-setup)
   - [Manager Config](#manager-configuration)
   - [Script Config](#script-configuration)
@@ -17,6 +17,7 @@ This packages comes with nano to help edit files and configure scripts from with
   - [Create Virtual Environment for Script](#create-virtual-environment-for-script)
   - [Delete Virtual Environment](#delete-virtual-environment)
   - [Run Script](#run-script)
+    - [Run Script as n8n Node](#run-script-as-n8n-node)
 - [Debugging](#debugging)
   - [Activate Virtual Environment](#activate-virtual-environment)
   - [Dectivate Virtual Environment](#dectivate-virtual-environment)
@@ -25,11 +26,7 @@ This packages comes with nano to help edit files and configure scripts from with
 
 # Installation
 Install n8n-pyvenv-manager using the n8n-pyvenv-manager [docker](https://www.docker.com/) image. The configuration is as of now command-line based. This assumes you have some fundamental knowledge of unix commands and docker exec.
-## Build from Dockerfile
-To build docker image from Dockerfile, run
-```
-docker build . -t n8n-pyvenv-manager
-```
+
 ## Start Docker Container
 To start the n8n docker container with Docker Compose, run
 ```
@@ -38,7 +35,13 @@ docker compose up -d
 You may need to use ```sudo``` depending on your docker configuration. 
 NOTE: this is a modified version of the official docker-compose file with MariaDB 10.9. To run with other databases, see [official documentation](https://github.com/n8n-io/n8n)
 
-# Script Setup
+## Build from Dockerfile
+To build docker image from Dockerfile, run
+```
+docker build . -t n8n-pyvenv-manager
+```
+
+# Setup
 To setup directory structures for your scripts, you may need to access the container console. A docker dashboard, such as [Portainer](https://www.portainer.io/), is recommended. 
 
 ## Directory Setup
@@ -141,7 +144,7 @@ Where the script_config.json looks like
 
 To create a virtual environment for this module, go to the manage directory and run
 ```
-python3 manage.py create print_hello
+python3 /<root_path>/manage/manage.py create print_hello
 ```
 The manager will automatically create a virtual environment for this script, add pip to the venv, and install the dependencies listed in script_config.json. 
 NOTE: Right now, the manager does not have the capabilit to check for duplicated environments. It is your responsibility to make sure no two scripts have the same name. Otherwise, the venv could fail to create or the existing venv could be destroyed. Duplicate check will come in a future update. 
@@ -150,7 +153,7 @@ NOTE: Right now, the manager does not have the capabilit to check for duplicated
 
 To delete a virtual environment, go to the manage directory and run
 ```
-python3 manage.py remove print_hello
+python3 /<root_path>/manage/manage.py remove print_hello
 ```
 The manager only deletes the virtual environment, and your scripts path will be left intact in the original paths. 
 
@@ -159,17 +162,18 @@ The manager only deletes the virtual environment, and your scripts path will be 
 Make sure you have created a virtual environment for this script using the method mentioned above. 
 To run a script, go to the manage directory and run
 ```
-python3 manage.py run print_hello
+python3 /<root_path>/manage/manage.py run print_hello
 ```
 This activates the virtual environment for that script, runs the script, and deactivates virtual environment. 
 
-This run command is intended for the n8n Execute node, where you run this line in the node and the manager takes care of the virtual environments for you. 
+### Run Script as n8n Node
+This run command is intended for the n8n Execute node. Simply paste the above command into an "Execute Command" node and the manager will take care of the rest for you. 
 
 # Debugging
 ## Activate Virtual Environment
 To manually activate a virtual environment and debug script, run
 ```
-source /<root_directory>/.env/<script_name>/bin/activate
+source /<root_path>/.env/<script_name>/bin/activate
 ```
 Now you can debug your script in the virtual environment.  
 
@@ -181,10 +185,11 @@ deactivate
 NOTE: some shell does not have the "source" or "deactivate" command. All commands in manage.py and in the examples here are run with #!/bin/bash. Check documentaiton for your shell for how to activate python virtual environments. 
 
 # Acknowledgements:
-The manager installs pip in each virtual environment with [get-pip](https://github.com/pypa/get-pip)
-The n8n-pyvenv-manager Docker image is based on [n8nio/n8n-debian](https://github.com/n8n-io/n8n/tree/master/docker/images/n8n-debian) and [nodejs-bullseye](https://hub.docker.com/layers/library/node/bullseye/images/sha256-57087574a8147a31efb0d21ef3b43ae8340ec7bf66679bb1a39b0f40b9f9f25b?context=explore)
+The manager installs pip in each virtual environment with [get-pip](https://github.com/pypa/get-pip).
+
+The n8n-pyvenv-manager Docker image is based on [n8nio/n8n-debian](https://github.com/n8n-io/n8n/tree/master/docker/images/n8n-debian) and [nodejs-bullseye](https://hub.docker.com/layers/library/node/bullseye/images/sha256-57087574a8147a31efb0d21ef3b43ae8340ec7bf66679bb1a39b0f40b9f9f25b?context=explore).
 
 # Future Plans
 1. Enable duplicate checks. Right now, it is up to you to make sure no two scripts have the same directory name. 
 2. Enable adding arguments to the end of scripts. Right now, a workaround is to save the arguments in a json file and let another script read that json file to get the parameters. 
-3. autoremove command to remove unused virtual environments
+3. Add autoremove command to remove unused virtual environments

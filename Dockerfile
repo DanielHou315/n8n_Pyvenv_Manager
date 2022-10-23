@@ -20,7 +20,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Installs git and python venv modules
-RUN apt-get update && apt-get install -y git python3-pip python3-setuptools python3-venv
+RUN apt-get update && apt-get install -y nano git python3-pip python3-setuptools python3-venv
 
 # Install Custom Component: pyvenv-manager
 COPY pyvenv_scripts/ /data/
