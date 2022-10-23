@@ -4,16 +4,23 @@ The n8n Python Virtual Environment Manager creates virtual environments and run 
 
 This packages comes with nano to help edit files and configure scripts from within the container, but you can always edit files in the maped directories from your host system. 
 
+## Table of Contents
 - [Installation](#Installation)
 - [Script Setup](#Script-Setup)
+  - [Directory Setup](##Directory-Setup)
+  - [Manager Config](##manager_config.json)
+  - [Script Config](##script_config.json)
 - [Example Usage](#Example-Usage)
+  - [Configure Script Directory](##Configure-Script-Directory)
+  - [Create Virtual Environment for Script](##Create-Virtual-Environment-for-Script)
+  - [Delete Virtual Environment](##Delete-Virtual-Environment)
+  - [Run Script](##Run-Script)
+  
 - [Debugging](#Debugging)
 - [Update Plan](#Update-Plan)
 
 # Installation
-
 Use the n8n-pyvenv-manager docker image . The configuration is as of now command-line based. This assumes you have some fundamental knowledge of unix operating systems and docker exec.
-
 To Run with Docker Compose:
 
 ```
@@ -21,7 +28,7 @@ To Run with Docker Compose:
 ```
 
 # Script Setup
-
+## Directory Setup
 1. Create a directory for each of your scripts in the /data/pyvenv_scripts directory like so:
    Each Script must be setup in a specific structure so that the manager can recognize the script and configure the virtual environments accordingly. The home directory of pyvenv_manager should look something like this: 
 ```
@@ -46,7 +53,7 @@ To Run with Docker Compose:
     - <script_2_name>/              # Venv for script_2
 ```
 
-### manager_config.json
+## manager_config.json
 
 The json file configures the manager. As of now, it only configures the home path for the manager. The default is "/data/pyvenv_scripts". In this directory the scripts should be structured as specified above. This should be the exact same thing as the <root_path> mentioned above
 CAUTION: make sure the "/" at the end of the path string is present! Otherwise, the script will not work. 
@@ -61,8 +68,8 @@ CAUTION: make sure the "/" at the end of the path string is present! Otherwise, 
     "root_path":"/data/pyvenv_scripts"      # Script will FAIL
 }
 ```
-### script_config.json
-This JSON file configures the script and its dependencies:
+## script_config.json
+These JSON files in each script directory configure the script and its dependencies:
 ```
 {
     "name":<script_name>,
