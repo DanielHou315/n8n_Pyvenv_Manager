@@ -20,7 +20,7 @@ def autoremove(root):
     envs = find_existing_envs(root)
     for env in envs:
         if env not in scripts:
-            ip = input("Found Obsolete Environment '{0}', confirm delete? [Y/n]".format(env))
+            ip = input("Found Obsolete Environment '{0}/.envs/{1}', confirm delete? [Y/n]".format(root, env))
             if ip == 'Y' or ip == 'y':
                 os.system("/bin/bash ./resources/remove_venv.sh {0}".format(env))
             else:

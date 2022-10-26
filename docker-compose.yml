@@ -5,7 +5,7 @@ services:
     image: mariadb:10.9
     restart: always
     environment:
-      - MARIADB_ROOT_PASSWORD=HhdMrdb21138532110.m
+      - MARIADB_ROOT_PASSWORD=root_passwd
       - MARIADB_DATABASE=n8n_db
       - MARIADB_USER=n8n
       - MARIADB_PASSWORD=n8n_passwd

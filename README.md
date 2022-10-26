@@ -6,7 +6,7 @@ This packages comes with nano to help edit files and configure scripts from with
 
 ## Table of Contents
 - [Installation](#installation)
-  - [Start Docker Container](#start-docker-container)
+  - [Docker](#start-docker-container)
   - [Build from Source](#build-from-dockerfile)
 - [Setup](#setup)
   - [Directory Setup](#directory-setup)
@@ -27,22 +27,45 @@ This packages comes with nano to help edit files and configure scripts from with
 # Installation
 Install n8n-pyvenv-manager using the n8n-pyvenv-manager [docker](https://www.docker.com/) image. The configuration is as of now command-line based. This assumes you have some fundamental knowledge of unix commands and docker exec.
 
-## Start Docker Container
-To start the n8n docker container with Docker Compose, run
+## Requirements
+Make sure Docker is installed on your machine. See more information [here](https://docs.docker.com/get-docker/). 
+
+## Install with Docker
+To start the n8n docker container with Docker Compose:
+Either
+1. Make sure docker is installed on you machine.
+2. Copy the docker-compose.yml in this repository to your desired directory.
+3. Change Environment variables as seen fit. 
+  - WARNING: Change the default passwords!
+4. In the directory, run
 ```
 docker compose up -d
 ```
+
+Use this n8n instance like any other n8n instance: Web GUI should be accessible at http://localhost:5678. See more information [here](https://docs.n8n.io/hosting/installation/docker/).
+
 You may need to use ```sudo``` depending on your docker configuration. 
-NOTE: this is a modified version of the official docker-compose file with MariaDB 10.9. To run with other databases, see [official documentation](https://github.com/n8n-io/n8n)
+
+This docker image runs by default with MariaDB 10.9 as its database. To run with other databases, see [official documentation](https://github.com/n8n-io/n8n)
+
+## Add to existing n8n instance
+1. Make sure your existing n8n environment has python virtual environment enabled. 
+- To test this, run
+```
+python3 -m venv -h
+```
+  and see if the output shows help doc for python3 venv.
+2. Copy the pyvenv_scripts folder in this repository to the /data directory in your n8n instance. Make sure the /data directory in you n8n container is mounted as a persistent volume, otherwise your scripts and congifurations may be lost after a container restart.
 
 ## Build from Dockerfile
-To build docker image from Dockerfile, run
+To build n8n-pyvenv-manager docker image from Dockerfile, run
 ```
 docker build . -t n8n-pyvenv-manager
 ```
+This image is based on [nodejs-bullseye](https://hub.docker.com/_/node/tags?page=1&name=bullseye), [n8n-debian Dockerfile](https://github.com/n8n-io/n8n/blob/master/docker/images/n8n-debian/Dockerfile), and additionally installed python virtual environment.
 
 # Setup
-To setup directory structures for your scripts, you may need to access the container console. A docker dashboard, such as [Portainer](https://www.portainer.io/), is recommended. 
+Make sure your n8n instance is running before entering setup. To setup directory structures for your scripts, you may need to access the container console. A docker dashboard, such as [Portainer](https://www.portainer.io/), is recommended. GUI node may or may not be supported in the future.
 
 ## Directory Setup
 1. Create a directory for each of your scripts in the /data/pyvenv_scripts directory like so:
@@ -113,7 +136,7 @@ The manager installs python dependencies with pip, so for each dependency, pleas
 }
 ```
 
-# Example Usage
+# Usage
 ## Configure Script Directory
 Let's say I wrote a print_hello script that imports JSON, bs4, dropbox as my dependencies and prints out "Hello Venv!". Configure your script directories as mentioned above. For this case, I will have a script directory like this: 
 ```
@@ -149,14 +172,6 @@ python3 /<root_path>/manage/manage.py create print_hello
 The manager will automatically create a virtual environment for this script, add pip to the venv, and install the dependencies listed in script_config.json. 
 NOTE: Right now, the manager does not have the capabilit to check for duplicated environments. It is your responsibility to make sure no two scripts have the same name. Otherwise, the venv could fail to create or the existing venv could be destroyed. Duplicate check will come in a future update. 
 
-## Delete Virtual Environment
-
-To delete a virtual environment, go to the manage directory and run
-```
-python3 /<root_path>/manage/manage.py remove print_hello
-```
-The manager only deletes the virtual environment, and your scripts path will be left intact in the original paths. 
-
 ## Run Script
 
 Make sure you have created a virtual environment for this script using the method mentioned above. 
@@ -168,6 +183,23 @@ This activates the virtual environment for that script, runs the script, and dea
 
 ### Run Script as n8n Node
 This run command is intended for the n8n Execute node. Simply paste the above command into an "Execute Command" node and the manager will take care of the rest for you. 
+
+## Delete Virtual Environment
+
+To delete a virtual environment, go to the manage directory and run
+```
+python3 /<root_path>/manage/manage.py remove print_hello
+```
+The manager only deletes the virtual environment, and your scripts path will be left intact in the original paths. 
+
+## Autoremove Virtual Environment
+To autoremove virtual environments that don't match any scripts in the directory, run
+```
+python3 /<root_path>/manage/manage.py autoremove
+```
+Then follow the prompts to confirm deletion of virtual environments. 
+
+WARNING: always backup your scripts and configurations!
 
 # Debugging
 ## Activate Virtual Environment
@@ -192,4 +224,3 @@ The n8n-pyvenv-manager Docker image is based on [n8nio/n8n-debian](https://githu
 # Future Plans
 1. Enable duplicate checks. Right now, it is up to you to make sure no two scripts have the same directory name. 
 2. Enable adding arguments to the end of scripts. Right now, a workaround is to save the arguments in a json file and let another script read that json file to get the parameters. 
-3. Add autoremove command to remove unused virtual environments
