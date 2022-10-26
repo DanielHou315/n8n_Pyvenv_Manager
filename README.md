@@ -6,7 +6,9 @@ This packages comes with nano to help edit files and configure scripts from with
 
 ## Table of Contents
 - [Installation](#installation)
-  - [Docker](#start-docker-container)
+  - [Requirements](#requirements)
+  - [Install with Docker](#install-with-docker)
+  - [Add to existing n8n Instance](#add-to-existing-n8n-instance)
   - [Build from Source](#build-from-dockerfile)
 - [Setup](#setup)
   - [Directory Setup](#directory-setup)
