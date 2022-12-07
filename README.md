@@ -59,6 +59,12 @@ python3 -m venv -h
   and see if the output shows help doc for python3 venv.
 2. Copy the pyvenv_scripts folder in this repository to the /data directory in your n8n instance. Make sure the /data directory in you n8n container is mounted as a persistent volume, otherwise your scripts and congifurations may be lost after a container restart.
 
+### Manually Pull Docker Image
+To manually pull the docker image, visit [the Docker repository](https://hub.docker.com/r/danielhouevr315/n8n_pyvenv_manager) or run
+```
+docker pull danielhouevr315/n8n-pyvenv-manager:latest
+```
+
 ## Build from Dockerfile
 To build n8n-pyvenv-manager docker image from Dockerfile, run
 ```
