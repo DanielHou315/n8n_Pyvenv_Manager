@@ -10,6 +10,7 @@ This packages comes with nano to help edit files and configure scripts from with
   - [Install with Docker](#install-with-docker)
   - [Add to existing n8n Instance](#add-to-existing-n8n-instance)
   - [Build from Source](#build-from-dockerfile)
+    - [Manually Pull Docker Image](#manually-pull-docker-image)
 - [Setup](#setup)
   - [Directory Setup](#directory-setup)
   - [Manager Config](#manager-configuration)
@@ -59,11 +60,6 @@ python3 -m venv -h
   and see if the output shows help doc for python3 venv.
 2. Copy the pyvenv_scripts folder in this repository to the /data directory in your n8n instance. Make sure the /data directory in you n8n container is mounted as a persistent volume, otherwise your scripts and congifurations may be lost after a container restart.
 
-### Manually Pull Docker Image
-To manually pull the docker image, visit [the Docker repository](https://hub.docker.com/r/danielhouevr315/n8n_pyvenv_manager) or run
-```
-docker pull danielhouevr315/n8n-pyvenv-manager:latest
-```
 
 ## Build from Dockerfile
 To build n8n-pyvenv-manager docker image from Dockerfile, run
@@ -71,6 +67,12 @@ To build n8n-pyvenv-manager docker image from Dockerfile, run
 docker build . -t n8n-pyvenv-manager
 ```
 This image is based on [nodejs-bullseye](https://hub.docker.com/_/node/tags?page=1&name=bullseye), [n8n-debian Dockerfile](https://github.com/n8n-io/n8n/blob/master/docker/images/n8n-debian/Dockerfile), and additionally installed python virtual environment.
+
+### Manually Pull Docker Image
+To manually pull the docker image, visit [the Docker repository](https://hub.docker.com/r/danielhouevr315/n8n_pyvenv_manager) or run
+```
+docker pull danielhouevr315/n8n-pyvenv-manager:latest
+```
 
 # Setup
 Make sure your n8n instance is running before entering setup. To setup directory structures for your scripts, you may need to access the container console. A docker dashboard, such as [Portainer](https://www.portainer.io/), is recommended. GUI node may or may not be supported in the future.
