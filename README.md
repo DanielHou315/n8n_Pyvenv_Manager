@@ -146,7 +146,7 @@ The manager installs python dependencies with pip, so for each dependency, pleas
 }
 ```
 
-# Usage
+# Example Usage
 ## Configure Script Directory
 Let's say I wrote a print_hello script that imports JSON, bs4, dropbox as my dependencies and prints out "Hello Venv!". Configure your script directories as mentioned above. For this case, I will have a script directory like this: 
 ```
