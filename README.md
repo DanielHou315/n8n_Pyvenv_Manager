@@ -232,5 +232,4 @@ The manager installs pip in each virtual environment with [get-pip](https://gith
 The n8n-pyvenv-manager Docker image is based on [n8nio/n8n-debian](https://github.com/n8n-io/n8n/tree/master/docker/images/n8n-debian) and [nodejs-bullseye](https://hub.docker.com/layers/library/node/bullseye/images/sha256-57087574a8147a31efb0d21ef3b43ae8340ec7bf66679bb1a39b0f40b9f9f25b?context=explore).
 
 # Future Plans
-1. Enable duplicate checks. Right now, it is up to you to make sure no two scripts have the same directory name. 
-2. Enable adding arguments to the end of scripts. Right now, a workaround is to save the arguments in a json file and let another script read that json file to get the parameters. 
+1. Enable adding arguments to the end of scripts. Right now, a workaround is to save the arguments in a json file and let another script read that json file to get the parameters. 
