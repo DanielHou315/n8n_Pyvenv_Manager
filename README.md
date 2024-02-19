@@ -1,5 +1,7 @@
 # n8n Python Virtualenv Manager
 
+UPDATE: n8n 1.0 now officially support python. This project will no longer be maintained. 
+
 The n8n-pyvenv-manager is a derivative of the [n8n automation platform](https://n8n.io/) with added capability to create virtual environments and run your python scripts with one command. This allows your scripts to run in designated virtual environments in n8n that otherwise do not support persistent python site-package storage or virtual environments. Files saved from your script can also be read and edited by other n8n nodes or other scripts should you choose to do so. 
 
 This packages comes with nano to help edit files and configure scripts from within the container, but you can always edit files in the mapped directories from your host system. 
